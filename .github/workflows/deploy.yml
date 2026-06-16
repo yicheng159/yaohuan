@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
@@ -36,10 +36,10 @@ jobs:
         working-directory: ./frontend
         run: npm run build
         env:
-          VITE_API_BASE_URL: https://yaohuan-backend.onrender.com/api
+          VITE_API_BASE_URL: https://web-production-1e505.up.railway.app/api
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
