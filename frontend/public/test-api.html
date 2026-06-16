@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API测试</title>
+</head>
+<body>
+    <h1>API连接测试</h1>
+    <div id="result"></div>
+    <script>
+        const resultDiv = document.getElementById('result');
+
+        async function testAPI() {
+            try {
+                // 测试 activists API
+                const response1 = await fetch('/api/activists/');
+                const data1 = await response1.json();
+                resultDiv.innerHTML += '<h2>积极分子API: 成功</h2>';
+                resultDiv.innerHTML += '<p>数据: ' + JSON.stringify(data1, null, 2) + '</p>';
+            } catch (error) {
+                resultDiv.innerHTML += '<h2>积极分子API: 失败</h2>';
+                resultDiv.innerHTML += '<p>错误: ' + error.message + '</p>';
+            }
+
+            try {
+                // 测试 party-members API
+                const response2 = await fetch('/api/party-members/');
+                const data2 = await response2.json();
+                resultDiv.innerHTML += '<h2>党员API: 成功</h2>';
+                resultDiv.innerHTML += '<p>数据: ' + JSON.stringify(data2, null, 2) + '</p>';
+            } catch (error) {
+                resultDiv.innerHTML += '<h2>党员API: 失败</h2>';
+                resultDiv.innerHTML += '<p>错误: ' + error.message + '</p>';
+            }
+
+            try {
+                // 测试 cultivation-records API
+                const response3 = await fetch('/api/cultivation-records/');
+                const data3 = await response3.json();
+                resultDiv.innerHTML += '<h2>培养记录API: 成功</h2>';
+                resultDiv.innerHTML += '<p>数据: ' + JSON.stringify(data3, null, 2) + '</p>';
+            } catch (error) {
+                resultDiv.innerHTML += '<h2>培养记录API: 失败</h2>';
+                resultDiv.innerHTML += '<p>错误: ' + error.message + '</p>';
+            }
+        }
+
+        testAPI();
+    </script>
+</body>
+</html>
