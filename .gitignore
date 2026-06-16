@@ -35,3 +35,6 @@ test_api.py
 
 docker-compose.override.yml
 staticfiles/
+
+# Keep GitHub workflow files
+!.github/
