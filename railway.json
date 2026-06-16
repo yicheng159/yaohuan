@@ -1,11 +1,13 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "NIXPACKS",
+    "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput"
   },
   "deploy": {
     "numReplicas": 1,
-    "sleep": true
+    "sleep": true,
+    "startCommand": "python start.py"
   },
   "env": {
     "SECRET_KEY": "django-insecure-ca1t*p((5#hcgyq#07h3%rr6vl)_x_1+mij3#e@_6705tl(5bg",
