@@ -30,10 +30,19 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-ca1t*p((5#hcgyq#07h3%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 RAILWAY_EXTERNAL_HOSTNAME = os.environ.get('RAILWAY_EXTERNAL_HOSTNAME')
-if RAILWAY_EXTERNAL_HOSTNAME and RAILWAY_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
+RAILWAY_PUBLIC_DOMAIN = os.environ.get('RAILWAY_PUBLIC_DOMAIN')
+if RAILWAY_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RAILWAY_EXTERNAL_HOSTNAME)
+if RAILWAY_PUBLIC_DOMAIN:
+    ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)
+allowed_hosts_env = os.environ.get('ALLOWED_HOSTS')
+if allowed_hosts_env:
+    for host in allowed_hosts_env.split(','):
+        host = host.strip()
+        if host and host not in ALLOWED_HOSTS:
+            ALLOWED_HOSTS.append(host)
 
 
 # Application definition
