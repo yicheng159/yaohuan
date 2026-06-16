@@ -19,6 +19,7 @@ management/__pycache__/
 .env
 .env.local
 .env.*.local
+!.env.example
 
 debug.log
 *.log
@@ -33,3 +34,4 @@ init_menus.py
 test_api.py
 
 docker-compose.override.yml
+staticfiles/

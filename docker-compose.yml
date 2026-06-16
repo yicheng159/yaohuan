@@ -17,24 +17,33 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - yaohuan-network
 
   backend:
     build: .
     container_name: yaohuan-backend
+    env_file:
+      - .env
     environment:
       - DEBUG=False
-      - SECRET_KEY=your-secret-key-change-in-production
+      - SECRET_KEY=django-insecure-ca1t*p((5#hcgyq#07h3%rr6vl)_x_1+mij3#e@_6705tl(5bg)
       - DATABASE_URL=postgres://yaohuan:yaohuan123@db:5432/yaohuan
-      - ALLOWED_HOSTS=localhost,your-domain.com
+      - ALLOWED_HOSTS=*
     volumes:
       - .:/app
+      - static_volume:/app/staticfiles
     ports:
       - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
     command: >
-      sh -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 myproject.wsgi:application"
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn --bind 0.0.0.0:8000 --workers 3 --threads 2 myproject.wsgi:application"
+    networks:
+      - yaohuan-network
 
   frontend:
     build:
@@ -42,9 +51,16 @@ services:
       dockerfile: Dockerfile
     container_name: yaohuan-frontend
     ports:
-      - "5173:80"
+      - "80:80"
     depends_on:
       - backend
+    networks:
+      - yaohuan-network
+
+networks:
+  yaohuan-network:
+    driver: bridge
 
 volumes:
   postgres_data:
+  static_volume:
