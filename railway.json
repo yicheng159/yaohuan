@@ -1,10 +1,30 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "NIXPACKS",
+    "nixpacksConfig": {
+      "phases": {
+        "setup": {
+          "cmds": [
+            "pip install -r requirements.txt"
+          ]
+        },
+        "build": {
+          "cmds": [
+            "python manage.py collectstatic --noinput",
+            "python manage.py migrate"
+          ]
+        }
+      },
+      "start": {
+        "cmd": "gunicorn --bind 0.0.0.0:$PORT --workers 2 --threads 2 myproject.wsgi:application"
+      }
+    }
   },
   "deploy": {
     "numReplicas": 1,
-    "sleep": true
+    "sleep": true,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
   }
 }

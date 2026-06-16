@@ -1,1 +1,9 @@
-{ "languages": [{ "id": "python", "version": "3.11", "name": "Python 3.11" }] }
+[providers]
+python = { version = "3.11" }
+
+[build]
+setup = ["pip install -r requirements.txt"]
+build = ["python manage.py collectstatic --noinput", "python manage.py migrate"]
+
+[start]
+cmd = "gunicorn --bind 0.0.0.0:$PORT --workers 2 --threads 2 myproject.wsgi:application"
