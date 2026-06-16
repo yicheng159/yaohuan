@@ -30,10 +30,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-ca1t*p((5#hcgyq#07h3%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-# Render will set PORT environment variable
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS = [RENDER_EXTERNAL_HOSTNAME]
+# Railway environment
+RAILWAY_EXTERNAL_HOSTNAME = os.environ.get('RAILWAY_EXTERNAL_HOSTNAME')
+if RAILWAY_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS = [RAILWAY_EXTERNAL_HOSTNAME]
 else:
     ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
@@ -70,7 +70,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'myproject' / 'static' / 'dist'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

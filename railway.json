@@ -1,30 +1,15 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS",
-    "nixpacksConfig": {
-      "phases": {
-        "setup": {
-          "cmds": [
-            "pip install -r requirements.txt"
-          ]
-        },
-        "build": {
-          "cmds": [
-            "python manage.py collectstatic --noinput",
-            "python manage.py migrate"
-          ]
-        }
-      },
-      "start": {
-        "cmd": "gunicorn --bind 0.0.0.0:$PORT --workers 2 --threads 2 myproject.wsgi:application"
-      }
-    }
+    "builder": "NIXPACKS"
   },
   "deploy": {
     "numReplicas": 1,
-    "sleep": true,
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10
+    "sleep": true
+  },
+  "env": {
+    "SECRET_KEY": "django-insecure-ca1t*p((5#hcgyq#07h3%rr6vl)_x_1+mij3#e@_6705tl(5bg",
+    "DEBUG": "False",
+    "ALLOWED_HOSTS": "*"
   }
 }
