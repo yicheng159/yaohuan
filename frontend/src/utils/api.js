@@ -27,6 +27,8 @@ export const apiFetch = (url, options = {}) => {
     fullUrl = `/${apiPath}`;
   }
 
+  fullUrl = fullUrl.replace(/\/+/g, '/');
+
   return fetch(fullUrl, {
     ...options,
     headers
