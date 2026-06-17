@@ -177,8 +177,11 @@ REST_FRAMEWORK = {
 }
 
 # CORS 配置
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',') if os.environ.get('CORS_ALLOWED_ORIGINS') else []
-CORS_ALLOW_ALL_ORIGINS = not CORS_ALLOWED_ORIGINS  # 如果没有配置特定来源，则允许所有
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    'https://yicheng159.github.io',
+    'http://localhost:5173',
+]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
     'DELETE',
