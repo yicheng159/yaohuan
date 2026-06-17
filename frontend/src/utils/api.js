@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://web-production-1e505.up.railway.app/api';
 
 export const apiFetch = (url, options = {}) => {
   const token = localStorage.getItem('token');
@@ -20,11 +20,11 @@ export const apiFetch = (url, options = {}) => {
   }
 
   let fullUrl;
-  if (API_BASE_URL.startsWith('http')) {
+  if (API_BASE_URL.startsWith('http://') || API_BASE_URL.startsWith('https://')) {
     const baseUrl = API_BASE_URL.replace(/\/$/, '');
     fullUrl = `${baseUrl}/${apiPath}`;
   } else {
-    fullUrl = `/${apiPath}`;
+    fullUrl = `${window.location.protocol}//${window.location.host}/${apiPath}`;
   }
 
   fullUrl = fullUrl.replace(/\/+/g, '/');
