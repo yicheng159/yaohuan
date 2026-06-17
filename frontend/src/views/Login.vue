@@ -57,7 +57,8 @@ const handleSubmit = async () => {
       errorMessage.value = data.message || '登录失败';
     }
   } catch (error) {
-    errorMessage.value = '网络错误，请稍后重试';
+    console.error('登录请求错误:', error);
+    errorMessage.value = `网络错误: ${error.message || error}`;
   } finally {
     loading.value = false;
   }
