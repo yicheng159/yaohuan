@@ -1754,3 +1754,14 @@ class ApprovalRecordViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(application_id=application_id)
         
         return queryset
+
+
+import os
+from django.http import HttpResponse
+
+
+def serve_frontend(request):
+    html_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'myproject', 'static', 'dist', 'index.html')
+    with open(html_path, 'r', encoding='utf-8') as f:
+        html_content = f.read()
+    return HttpResponse(html_content, content_type='text/html')
