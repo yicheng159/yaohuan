@@ -26,9 +26,14 @@ export const apiFetch = (url, options = {}) => {
     fullUrl = `/${apiPath}`;
   }
 
+  console.log('apiFetch debug:', { url, apiPath, fullUrl, API_BASE_URL });
+
   return fetch(fullUrl, {
     ...options,
     headers
+  }).then(response => {
+    console.log('apiFetch response:', { status: response.status, url: response.url, type: response.type });
+    return response;
   });
 };
 
