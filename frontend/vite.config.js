@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [vue()],
-    base: isProduction ? '/yaohuan/' : '/',
+    base: '/',
     build: {
       outDir: isProduction
         ? path.resolve(__dirname, 'dist')

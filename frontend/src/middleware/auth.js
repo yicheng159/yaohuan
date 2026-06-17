@@ -1,4 +1,5 @@
 import { checkRoutePermission, getPermissions, hasModulePermission } from '../utils/permission';
+import { apiFetch } from '../utils/api';
 
 export const authMiddleware = async (to, from, next) => {
   const token = localStorage.getItem('token');
@@ -20,11 +21,7 @@ export const authMiddleware = async (to, from, next) => {
   const permissions = getPermissions();
   if (permissions.length === 0) {
     try {
-      const response = await fetch('/api/user-info/', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const response = await apiFetch('/api/user-info/');
       
       const data = await response.json();
       if (data.code === 200) {

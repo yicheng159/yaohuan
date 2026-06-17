@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { apiFetch } from '../utils/api';
 
 const router = useRouter();
 
@@ -27,16 +28,7 @@ const logout = async () => {
   showDropdown.value = false;
   
   try {
-    const token = localStorage.getItem('token');
-    if (token) {
-      await fetch('/api/logout/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
-    }
+    await apiFetch('/api/logout/', { method: 'POST' });
   } catch (error) {
     console.error('退出登录失败:', error);
   } finally {

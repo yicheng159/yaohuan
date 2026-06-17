@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { apiFetch } from '../utils/api';
 
 const router = useRouter();
 
@@ -29,11 +30,8 @@ const handleSubmit = async () => {
   loading.value = true;
   
   try {
-    const response = await fetch('/api/login/', {
+    const response = await apiFetch('/api/login/', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify({
         student_id: form.student_id.trim(),
         password: form.password
@@ -46,11 +44,7 @@ const handleSubmit = async () => {
       localStorage.setItem('token', data.data.token);
       localStorage.setItem('user', JSON.stringify(data.data.user));
       
-      const userInfoResponse = await fetch('/api/user-info/', {
-        headers: {
-          'Authorization': `Bearer ${data.data.token}`
-        }
-      });
+      const userInfoResponse = await apiFetch('/api/user-info/');
       
       const userInfoData = await userInfoResponse.json();
       if (userInfoData.code === 200) {

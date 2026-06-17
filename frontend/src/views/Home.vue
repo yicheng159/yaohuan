@@ -1,5 +1,6 @@
 <script setup>import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { apiFetch } from '../utils/api';
 const router = useRouter();
 const stats = ref([
  { title: '成员总数', value: '--', icon: '👥', api: '/api/members/statistics/', field: 'total' },
@@ -17,14 +18,9 @@ const formatNumber = (num) => {
  return num.toLocaleString();
 };
 const fetchStats = async () => {
- const token = localStorage.getItem('token');
  for (const stat of stats.value) {
  try {
- const response = await fetch(stat.api, {
- headers: {
- 'Authorization': `Bearer ${token}`
- }
- });
+ const response = await apiFetch(stat.api);
  if (response.ok) {
  const data = await response.json();
  stat.value = formatNumber(data[stat.field]);
@@ -36,13 +32,8 @@ const fetchStats = async () => {
  }
 };
 const fetchActivities = async () => {
- const token = localStorage.getItem('token');
  try {
- const response = await fetch('/api/activities/?limit=5', {
- headers: {
- 'Authorization': `Bearer ${token}`
- }
- });
+ const response = await apiFetch('/api/activities/?limit=5');
  if (response.ok) {
  const data = await response.json();
  recentActivities.value = data.results.map(activity => ({

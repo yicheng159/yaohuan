@@ -1,6 +1,7 @@
 <script setup>import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { hasModulePermission } from '../utils/permission';
+import { apiFetch } from '../utils/api';
 const emit = defineEmits(['collapse-change']);
 const router = useRouter();
 const route = useRoute();
@@ -22,12 +23,7 @@ const getIcon = (iconName) => {
 };
 const fetchMenus = async () => {
  try {
- const token = localStorage.getItem('token');
- const response = await fetch('/api/menus/tree/', {
- headers: {
- 'Authorization': `Bearer ${token}`
- }
- });
+ const response = await apiFetch('/api/menus/tree/');
  if (response.ok) {
  const data = await response.json();
  menus.value = filterMenusByPermission(data.data || data);
