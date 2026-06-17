@@ -4,7 +4,6 @@ import path from 'path'
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production'
-  const apiBaseUrl = process.env.VITE_API_BASE_URL || ''
 
   return {
     plugins: [vue()],
@@ -30,9 +29,6 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
         },
       },
-    },
-    define: {
-      'import.meta.env.VITE_API_BASE_URL': JSON.stringify(apiBaseUrl),
     },
   }
 })
