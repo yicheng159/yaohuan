@@ -10,6 +10,9 @@ def main():
     print("[START] Running migrations...", flush=True)
     subprocess.run([sys.executable, 'manage.py', 'migrate', '--noinput'], check=True, stdout=sys.stdout, stderr=sys.stderr)
     
+    print("[START] Running collectstatic...", flush=True)
+    subprocess.run([sys.executable, 'manage.py', 'collectstatic', '--noinput'], check=True, stdout=sys.stdout, stderr=sys.stderr)
+    
     cmd = [
         'gunicorn',
         '--bind', f'0.0.0.0:{port}',
