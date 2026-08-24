@@ -14,11 +14,11 @@
   'use strict';
 
   var AppConfig = {
-    // 例：'https://abcdefghijklmno.supabase.co'
-    SUPABASE_URL: '',
+    // Supabase 项目（yicheng159's Project）
+    SUPABASE_URL: 'https://fghthgiwvvbewlhnixnf.supabase.co',
 
-    // 例：'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'（anon public key，可公开）
-    SUPABASE_ANON_KEY: '',
+    // Publishable key（等价旧版 anon key，可公开放在前端）
+    SUPABASE_ANON_KEY: 'sb_publishable_cgdEmvAPAchGAsg6_JSBhw_0YDbYMif',
 
     /** 是否已配置云端（两个值都非空才视为启用） */
     cloudEnabled: function () {
