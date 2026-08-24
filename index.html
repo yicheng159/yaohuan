@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模板库</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    // 全局错误捕获：JS 抛错时在屏幕右上角弹红框，便于不打开 DevTools 也能看到
+    (function () {
+      function show(msg) {
+        var old = document.getElementById('__err_banner');
+        if (old) old.remove();
+        var el = document.createElement('div');
+        el.id = '__err_banner';
+        el.style.cssText = 'position:fixed;top:8px;right:8px;max-width:60vw;padding:10px 14px;background:#fdecea;color:#a0231f;border:1px solid #f0c4c1;border-radius:8px;font:13px/1.4 system-ui,sans-serif;z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,.12);white-space:pre-wrap;';
+        el.textContent = '⚠️ 页面初始化出错：' + msg;
+        document.body ? document.body.appendChild(el) : document.addEventListener('DOMContentLoaded', function () { document.body.appendChild(el); });
+      }
+      window.addEventListener('error', function (e) {
+        show((e.filename || '').split('/').pop() + ':' + e.lineno + ' ' + (e.message || ''));
+      });
+      window.addEventListener('unhandledrejection', function (e) {
+        show('Promise: ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)));
+      });
+    })();
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🖨️ 模板库</div>
+    <nav class="nav">
+      <button class="nav-tab active" id="navHome" data-view="home">模板库</button>
+      <button class="nav-tab" id="navDesign" data-view="design">设计模板</button>
+      <button class="nav-tab" id="navFill" data-view="fill">填写打印</button>
+    </nav>
+    <div class="top-actions">
+      <span id="syncStatus" class="sync-status" title="同步状态">● 本地</span>
+      <button class="btn" id="btnNew">+ 新建模板</button>
+      <button class="btn primary" id="btnImportWord">📄 导入 Word 建模板</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">我的模板</div>
+      <ul id="tplList" class="tpl-list"></ul>
+    </aside>
+
+    <main class="main">
+      <!-- 首页：模板库 -->
+      <section id="homeView" class="view">
+        <div class="view-head"><h2>模板库</h2><span class="muted">点击卡片或右侧「打印 / 设计」使用模板</span></div>
+        <div id="homeGrid" class="home-grid"></div>
+      </section>
+
+      <!-- 设计模板 -->
+      <section id="designView" class="view">
+        <div class="view-actions">
+          <button class="btn" id="btnBackHome">← 返回</button>
+          <button class="btn primary" id="btnSaveDesign">💾 保存模板</button>
+          <span class="muted">保存后可随时切换、调用与打印</span>
+        </div>
+        <div id="designEditor"></div>
+      </section>
+
+      <!-- 填写打印 -->
+      <section id="fillView" class="view">
+        <div class="view-actions">
+          <button class="btn" id="btnFillBack">← 返回</button>
+          <button class="btn" id="btnExcelWizard">📥 导入 Excel 批量填表</button>
+          <button class="btn primary" id="btnPrint">🖨️ 打印 / 导出 PDF</button>
+          <span class="muted">填写可变字段 → 实时预览 → 打印（或浏览器“另存为 PDF”）</span>
+        </div>
+        <div class="fill-layout">
+          <div id="fillMain" class="fill-main"></div>
+          <div class="preview-pane">
+            <div class="preview-title">实时预览</div>
+            <iframe id="previewFrame" class="preview-frame" title="预览"></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- Excel 导入向导模态 -->
+  <div id="excelModal" class="modal-mask" style="display:none">
+    <div class="modal">
+      <div class="modal-head">
+        <span class="modal-title">从 Excel 导入数据并填充模板</span>
+        <button id="excelClose" class="icon-del" title="关闭">✕</button>
+      </div>
+      <div class="modal-body" id="excelBody"></div>
+    </div>
+  </div>
+
+  <!-- 依赖库（本地内置，离线可用） -->
+  <script src="lib/mammoth.browser.min.js"></script>
+  <script src="lib/xlsx.full.min.js"></script>
+  <!-- 应用脚本 -->
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/fields.js"></script>
+  <script src="js/importer.js"></script>
+  <script src="js/cloud.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/printer.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/excelwizard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
